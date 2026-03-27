@@ -2,6 +2,8 @@
 ## Chức năng: Tìm kiếm và Lọc sản phẩm (Search & Filter)
 **Mã chức năng:** USER-03  
 **Trạng thái:** Draft  
+**Người soạn thảo:** Ngô Đức Dũng  
+**Vai trò:** Developer
 
 ---
 

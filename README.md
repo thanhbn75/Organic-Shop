@@ -14,4 +14,5 @@ Dưới đây là các liên kết đến tài liệu phân tích chi tiết cho
 
 * [USER-01: Chức năng Giỏ hàng (Shopping Cart)](./SRS_CART.md)
 * [USER-02: Chức năng Thanh toán & Đặt hàng (Checkout)](./SRS_CHECKOUT.md)
+* [USER-03: Chức năng Tìm kiếm & Lọc sản phẩm](./SRS_SEARCH.md)
 * [ADMIN-01: Quản lý Sản phẩm (Product Management)](./SRS_ADMIN_PRODUCT.md)

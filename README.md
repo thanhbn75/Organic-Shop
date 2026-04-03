@@ -1,7 +1,5 @@
 # 🛒 Đề tài: Website Bán Thực Phẩm Tự Nhiên (Organic Shop)
 
-Tài liệu Đặc tả Yêu cầu Phần mềm (SRS) phục vụ cho bài tập môn học.
-
 ### 👥 Sinh viên thực hiện
 * Nguyễn Đức Minh - 23810310259
 * Ngô Đức Dũng - 23810310264

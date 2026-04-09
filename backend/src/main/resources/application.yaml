@@ -1,0 +1,52 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: organic-shop-backend
+  datasource:
+    url: jdbc:mysql://localhost:3306/organic_shop?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: "dummy-client-id"
+            client-secret: "dummy-client-secret"
+            scope: profile, email
+
+app:
+  jwt:
+    secret: 9A5B3C7D4E1F8A6B2C9D0E7F4A1B3C5D7E9F0A2B4C6D8E1F3A5B7C9D0E2F4A6
+    expirationMs: 86400000 # 24 hours
+
+payment:
+  vnpay:
+    tmnCode: # YOUR_VNPAY_TMN_CODE
+    hashSecret: # YOUR_VNPAY_HASH_SECRET
+    url: # YOUR_VNPAY_URL
+    returnUrl: http://localhost:8080/api/payments/vnpay/callback
+  momo:
+    partnerCode: # YOUR_MOMO_PARTNER_CODE
+    accessKey: # YOUR_MOMO_ACCESS_KEY
+    secretKey: # YOUR_MOMO_SECRET_KEY
+    endpoint: # YOUR_MOMO_ENDPOINT
+    returnUrl: http://localhost:8080/api/payments/momo/callback
+    notifyUrl: http://localhost:8080/api/payments/momo/notify
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html

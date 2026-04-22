@@ -3,6 +3,7 @@ package com.organicshop.backend.service.impl;
 import com.organicshop.backend.dto.AddressDTO;
 import com.organicshop.backend.dto.UserDTO;
 import com.organicshop.backend.entity.Address;
+import com.organicshop.backend.entity.Role;
 import com.organicshop.backend.entity.User;
 import com.organicshop.backend.exception.BadRequestException;
 import com.organicshop.backend.exception.ResourceNotFoundException;
@@ -12,6 +13,8 @@ import com.organicshop.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +30,32 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Override
+    public Page<UserDTO> getAllUsers(Pageable pageable) {
+        return userRepository.findAll(pageable).map(this::mapToDTO);
+    }
+
+    @Override
+    public void toggleAccountLock(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        user.setLocked(!user.isLocked());
+        userRepository.save(user);
+    }
+
+    @Override
+    public void changeUserRole(Long userId, String roleName) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        try {
+            Role role = Role.valueOf(roleName);
+            user.setRole(role);
+            userRepository.save(user);
+        } catch (IllegalArgumentException e) {
+            throw new BadRequestException("Invalid role");
+        }
+    }
 
     @Override
     public UserDTO getUserProfile(Long userId) {
@@ -129,6 +158,7 @@ public class UserServiceImpl implements UserService {
         dto.setFullName(user.getFullName());
         dto.setPhone(user.getPhone());
         dto.setRole(user.getRole().name());
+        dto.setLocked(user.isLocked());
         dto.setCreatedAt(user.getCreatedAt());
         return dto;
     }

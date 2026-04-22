@@ -35,6 +35,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     ProductRepository productRepository;
 
+    @Autowired
+    com.organicshop.backend.service.MailService mailService;
+
     @Override
     public OrderDTO createOrder(Long userId, OrderRequest request) {
         User user = userRepository.findById(userId)
@@ -80,6 +83,18 @@ public class OrderServiceImpl implements OrderService {
 
         cart.getItems().clear();
         cartRepository.save(cart);
+
+        try {
+            mailService.sendOrderConfirmation(
+                user.getEmail(), 
+                user.getFullName(), 
+                savedOrder.getId(), 
+                savedOrder.getTotalPrice().toString()
+            );
+        } catch (Exception e) {
+            // Log exception, don't fail the order just because mail failed
+            System.err.println("Failed to send order confirmation email: " + e.getMessage());
+        }
 
         return mapToDTO(savedOrder);
     }

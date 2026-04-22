@@ -1,3 +1,74 @@
 /data.txt
 
 /git.txt
+
+############################
+# 🚫 Build files
+############################
+target/
+build/
+dist/
+
+############################
+# 🚫 Environment variables
+############################
+.env
+.env.*
+*.env
+
+############################
+# 🚫 Application config (chứa secret)
+############################
+application.yaml
+application.yml
+application.properties
+
+# 👉 Giữ lại file mẫu
+!application-example.yaml
+
+############################
+# 🚫 IDE
+############################
+.idea/
+.vscode/
+*.iml
+
+############################
+# 🚫 Logs
+############################
+*.log
+logs/
+
+############################
+# 🚫 OS files
+############################
+.DS_Store
+Thumbs.db
+
+############################
+# 🚫 Node modules (frontend)
+############################
+frontend/node_modules/
+
+############################
+# 🚫 Package lock (optional)
+############################
+# frontend/package-lock.json
+
+############################
+# 🚫 Docker (nếu có)
+############################
+docker-compose.override.yml
+
+############################
+# 🚫 Generated files
+############################
+*.class
+*.jar
+*.war
+
+############################
+# 🚫 Upload / temp files
+############################
+uploads/
+tmp/

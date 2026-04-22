@@ -36,6 +36,8 @@ public class User {
 
     private String providerId;
 
+    private boolean locked = false;
+
     @Column(updatable = false)
     private LocalDateTime createdAt;
     

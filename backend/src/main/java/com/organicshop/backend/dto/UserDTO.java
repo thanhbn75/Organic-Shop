@@ -10,5 +10,6 @@ public class UserDTO {
     private String fullName;
     private String phone;
     private String role;
+    private boolean locked;
     private LocalDateTime createdAt;
 }

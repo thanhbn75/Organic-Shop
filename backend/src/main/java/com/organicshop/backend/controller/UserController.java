@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +22,29 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping
+    public ResponseEntity<ApiResponse<Page<UserDTO>>> getAllUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<UserDTO> users = userService.getAllUsers(PageRequest.of(page, size));
+        return ResponseEntity.ok(ApiResponse.success("Users fetched", users));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}/toggle-lock")
+    public ResponseEntity<ApiResponse<Void>> toggleLock(@PathVariable Long id) {
+        userService.toggleAccountLock(id);
+        return ResponseEntity.ok(ApiResponse.success("User lock status toggled", null));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}/role")
+    public ResponseEntity<ApiResponse<Void>> updateRole(@PathVariable Long id, @RequestParam String role) {
+        userService.changeUserRole(id, role);
+        return ResponseEntity.ok(ApiResponse.success("User role updated", null));
+    }
 
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<UserDTO>> getProfile(@AuthenticationPrincipal UserDetailsImpl userDetails) {

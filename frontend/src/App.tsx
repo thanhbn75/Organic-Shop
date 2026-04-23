@@ -985,7 +985,7 @@ function ProfilePage({
             </div>
           ))
         ) : (
-          <EmptyState title="Chưa có đơn hàng" description="ịch sử mua hàng sẽ hiển thị tại đây." />
+          <EmptyState title="Chưa có đơn hàng" description="Lịch sử mua hàng sẽ hiển thị tại đây." />
         )}
       </div>
     </div>
@@ -1105,7 +1105,7 @@ function OrderDetailPage({ token }: { token: string }) {
                       }
                       className="button-primary mt-3"
                     >
-                      Gui danh gia
+                      Gửi đánh giá
                     </button>
                   </div>
                 ) : null}
@@ -1199,7 +1199,7 @@ function AdminPage({
   });
   const ordersQuery = useQuery({
     queryKey: ["admin-orders"],
-    queryFn: () => apiClient.getAllOrdersAdmin({ size: 8 }),
+    queryFn: () => apiClient.getAllOrdersAdmin({ size: 20 }),
     enabled: Boolean(token && isAdmin),
   });
   const productsQuery = useQuery({

@@ -3,9 +3,11 @@ package com.organicshop.backend.service.impl;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -49,6 +51,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse login(LoginRequest loginRequest) {
+        upgradeLegacyPasswordIfNeeded(loginRequest);
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
@@ -61,6 +65,30 @@ public class AuthServiceImpl implements AuthService {
                 .toList();
 
         return new AuthResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getFullName(), roles.get(0));
+    }
+
+    private void upgradeLegacyPasswordIfNeeded(LoginRequest loginRequest) {
+        Optional<User> optionalUser = userRepository.findByEmail(loginRequest.getEmail());
+        if (optionalUser.isEmpty()) {
+            return;
+        }
+
+        User user = optionalUser.get();
+        String storedPassword = user.getPassword();
+        if (storedPassword == null || storedPassword.isBlank() || isBcryptHash(storedPassword)) {
+            return;
+        }
+
+        if (!storedPassword.equals(loginRequest.getPassword())) {
+            throw new BadCredentialsException("Invalid email or password");
+        }
+
+        user.setPassword(encoder.encode(loginRequest.getPassword()));
+        userRepository.save(user);
+    }
+
+    private boolean isBcryptHash(String password) {
+        return password.startsWith("$2a$") || password.startsWith("$2b$") || password.startsWith("$2y$");
     }
 
     @Override

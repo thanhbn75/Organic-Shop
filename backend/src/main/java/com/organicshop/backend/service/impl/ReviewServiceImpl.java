@@ -3,6 +3,8 @@ package com.organicshop.backend.service.impl;
 import com.organicshop.backend.dto.ReviewDTO;
 import com.organicshop.backend.dto.ReviewRequest;
 import com.organicshop.backend.entity.*;
+import com.organicshop.backend.exception.BadRequestException;
+import com.organicshop.backend.exception.ResourceNotFoundException;
 import com.organicshop.backend.repository.*;
 import com.organicshop.backend.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,20 +33,22 @@ public class ReviewServiceImpl implements ReviewService {
     @CacheEvict(value = "productReviews", allEntries = true)
     public ReviewDTO createReview(Long userId, ReviewRequest request) {
         Product product = productRepository.findById(request.getProductId())
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        // Check if user has already reviewed
         if (reviewRepository.existsByUserIdAndProductId(userId, product.getId())) {
-            throw new RuntimeException("You have already reviewed this product.");
+            throw new BadRequestException("You have already reviewed this product.");
         }
 
-        // Check if user has purchased this product and order is completed
-        long count = orderDetailRepository.countByUserIdAndProductIdAndOrderStatus(userId, product.getId(), OrderStatus.COMPLETED);
+        long count = orderDetailRepository.countByUserIdAndProductIdAndOrderStatus(
+                userId,
+                product.getId(),
+                OrderStatus.COMPLETED
+        );
         if (count == 0) {
-            throw new RuntimeException("You must buy the product and complete the order before reviewing it.");
+            throw new BadRequestException("You must have a completed order for this product before reviewing it.");
         }
 
         Review review = Review.builder()

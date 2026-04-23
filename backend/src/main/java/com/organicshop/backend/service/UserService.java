@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface UserService {
     Page<UserDTO> getAllUsers(Pageable pageable);
-    void toggleAccountLock(Long userId);
-    void changeUserRole(Long userId, String roleName);
+    void toggleAccountLock(Long actorId, Long userId);
+    void changeUserRole(Long actorId, Long userId, String roleName);
 
     UserDTO getUserProfile(Long userId);
     UserDTO updateUserProfile(Long userId, UserDTO userDTO);

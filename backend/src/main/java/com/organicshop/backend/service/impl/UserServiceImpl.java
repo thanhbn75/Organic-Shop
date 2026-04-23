@@ -37,17 +37,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void toggleAccountLock(Long userId) {
+    public void toggleAccountLock(Long actorId, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        if (actorId.equals(userId)) {
+            throw new BadRequestException("You cannot lock your own account");
+        }
+        if (user.getRole() != Role.ROLE_USER) {
+            throw new BadRequestException("Only user accounts can be locked");
+        }
         user.setLocked(!user.isLocked());
         userRepository.save(user);
     }
 
     @Override
-    public void changeUserRole(Long userId, String roleName) {
+    public void changeUserRole(Long actorId, Long userId, String roleName) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        if (actorId.equals(userId)) {
+            throw new BadRequestException("You cannot change your own role");
+        }
+
+        if (user.getRole() == Role.ROLE_ADMIN) {
+            throw new BadRequestException("You cannot change another admin's role");
+        }
+
         try {
             Role role = Role.valueOf(roleName);
             user.setRole(role);

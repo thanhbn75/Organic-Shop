@@ -10,6 +10,7 @@ import com.organicshop.backend.repository.CartRepository;
 import com.organicshop.backend.repository.OrderRepository;
 import com.organicshop.backend.repository.ProductRepository;
 import com.organicshop.backend.repository.UserRepository;
+import com.organicshop.backend.service.InventoryService;
 import com.organicshop.backend.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,6 +39,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     com.organicshop.backend.service.MailService mailService;
 
+    @Autowired
+    InventoryService inventoryService;
+
     @Override
     public OrderDTO createOrder(Long userId, OrderRequest request) {
         User user = userRepository.findById(userId)
@@ -56,6 +60,8 @@ public class OrderServiceImpl implements OrderService {
 
         BigDecimal total = BigDecimal.ZERO;
         List<OrderDetail> details = new ArrayList<>();
+        record PendingMovement(Product product, Integer quantity, Integer before, Integer after) {}
+        List<PendingMovement> pendingMovements = new ArrayList<>();
 
         for (CartItem item : cart.getItems()) {
             Product product = item.getProduct();
@@ -63,8 +69,10 @@ public class OrderServiceImpl implements OrderService {
                 throw new BadRequestException("Not enough stock for product " + product.getName());
             }
 
+            int before = product.getStock();
             product.setStock(product.getStock() - item.getQuantity());
             productRepository.save(product);
+            pendingMovements.add(new PendingMovement(product, item.getQuantity(), before, product.getStock()));
 
             OrderDetail detail = new OrderDetail();
             detail.setOrder(order);
@@ -80,6 +88,19 @@ public class OrderServiceImpl implements OrderService {
         order.setTotalPrice(total);
 
         Order savedOrder = orderRepository.save(order);
+        for (PendingMovement movement : pendingMovements) {
+            inventoryService.recordMovement(
+                    movement.product(),
+                    user,
+                    InventoryMovementType.ORDER,
+                    -movement.quantity(),
+                    movement.before(),
+                    movement.after(),
+                    "ORDER",
+                    savedOrder.getId(),
+                    "Stock deducted after order placement"
+            );
+        }
 
         cart.getItems().clear();
         cartRepository.save(cart);
@@ -128,8 +149,20 @@ public class OrderServiceImpl implements OrderService {
         // Restore stock
         for (OrderDetail detail : order.getOrderDetails()) {
             Product product = detail.getProduct();
+            int before = product.getStock();
             product.setStock(product.getStock() + detail.getQuantity());
             productRepository.save(product);
+            inventoryService.recordMovement(
+                    product,
+                    userRepository.findById(userId).orElse(null),
+                    InventoryMovementType.CANCELLATION,
+                    detail.getQuantity(),
+                    before,
+                    product.getStock(),
+                    "ORDER_CANCEL",
+                    order.getId(),
+                    "Stock restored after order cancellation"
+            );
         }
 
         order.setOrderStatus(OrderStatus.CANCELLED);

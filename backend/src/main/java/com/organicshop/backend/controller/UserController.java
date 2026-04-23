@@ -34,15 +34,20 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/toggle-lock")
-    public ResponseEntity<ApiResponse<Void>> toggleLock(@PathVariable Long id) {
-        userService.toggleAccountLock(id);
+    public ResponseEntity<ApiResponse<Void>> toggleLock(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long id) {
+        userService.toggleAccountLock(userDetails.getId(), id);
         return ResponseEntity.ok(ApiResponse.success("User lock status toggled", null));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/role")
-    public ResponseEntity<ApiResponse<Void>> updateRole(@PathVariable Long id, @RequestParam String role) {
-        userService.changeUserRole(id, role);
+    public ResponseEntity<ApiResponse<Void>> updateRole(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long id,
+            @RequestParam String role) {
+        userService.changeUserRole(userDetails.getId(), id, role);
         return ResponseEntity.ok(ApiResponse.success("User role updated", null));
     }
 

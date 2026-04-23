@@ -7,6 +7,7 @@ type AppHeaderProps = {
   onKeywordChange: (value: string) => void;
   onSearch: (event: FormEvent<HTMLFormElement>) => void;
   token: string;
+  isAdmin: boolean;
   onLogout: () => void;
   cartCount: number;
 };
@@ -16,6 +17,7 @@ export function AppHeader({
   onKeywordChange,
   onSearch,
   token,
+  isAdmin,
   onLogout,
   cartCount,
 }: AppHeaderProps) {
@@ -28,7 +30,7 @@ export function AppHeader({
           </div>
           <div>
             <p className="font-heading text-xl font-bold text-moss">Organic Shop</p>
-            <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Fresh. Calm. Honest.</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Tươi. Sạch. Minh bạch.</p>
           </div>
         </Link>
 
@@ -37,17 +39,18 @@ export function AppHeader({
           <input
             value={keyword}
             onChange={(event) => onKeywordChange(event.target.value)}
-            placeholder="Search organic vegetables, fruits, pantry..."
+            placeholder="Tìm rau củ, trái cây, thực phẩm hữu cơ..."
             className="w-full bg-transparent text-sm outline-none"
           />
         </form>
 
         <nav className="flex items-center gap-2 text-sm font-medium">
           {[
-            ["/products", "Products"],
-            ["/cart", "Cart"],
-            ["/checkout", "Checkout"],
-            ["/profile", "Profile"],
+            ["/products", "Sản phẩm"],
+            ["/journal", "Bài viết"],
+            ["/cart", "Giỏ hàng"],
+            ["/profile", "Cá nhân"],
+            ...(isAdmin ? [["/admin", "Quản trị"]] : []),
           ].map(([href, label]) => (
             <NavLink
               key={href}
@@ -62,12 +65,12 @@ export function AppHeader({
           {token ? (
             <button onClick={onLogout} className="button-secondary gap-2">
               <LogOut className="h-4 w-4" />
-              Sign out
+              Đăng xuất
             </button>
           ) : (
             <Link to="/authenticate" className="button-primary gap-2">
               <UserRound className="h-4 w-4" />
-              Login
+              Đăng nhập
             </Link>
           )}
           <Link to="/cart" className="relative rounded-full bg-moss px-4 py-3 text-white">

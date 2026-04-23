@@ -1,0 +1,79 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: organic-shop-backend
+  datasource:
+    url: jdbc:mysql://localhost:3306/organic_shop?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: Nguyen123456789-
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${outbound.identity.client-id}
+            client-secret: ${outbound.identity.client-secret}
+            scope: profile, email
+  data:
+    redis:
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dn8513913@gmail.com
+    password: zkra bkfh jeid sbwj
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+app:
+  frontend-url: http://localhost:3000
+  cors:
+    allowed-origins: http://localhost:3000,http://localhost:5173
+  jwt:
+    secret: 9A5B3C7D4E1F8A6B2C9D0E7F4A1B3C5D7E9F0A2B4C6D8E1F3A5B7C9D0E2F4A6
+    expirationMs: 86400000 # 24 hours
+
+payment:
+  vnpay:
+    tmnCode: ${YOUR_TMN_CODE}
+    hashSecret: ${YOUR_HASH_SECRET}
+    payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+    returnUrl: http://localhost:8080/api/payments/vnpay-return
+    version: 2.1.0
+    command: pay
+    currCode: VND
+    locale: vn
+
+outbound:
+  identity:
+    client-id: ${CLIENT_ID}
+    client-secret: ${CLIENT_SECRET}
+    redirect-uri: http://localhost:3000/authenticate
+    token-uri: https://oauth2.googleapis.com/token
+    user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html

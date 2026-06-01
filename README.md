@@ -1,137 +1,119 @@
-# 🛒 Website Bán Thực Phẩm Tự Nhiên (Organic Shop)
+# Website Bán Thực Phẩm Hữu Cơ - Organic Shop
 
-> **Đề tài thực tập tốt nghiệp** — Lớp LTWNC-D18CNPM2
+## Tên đề tài
 
-Hệ thống website hỗ trợ người dùng tìm kiếm sản phẩm hữu cơ, quản lý giỏ hàng, đặt hàng và theo dõi đơn hàng. Phía quản trị hỗ trợ quản lý sản phẩm, danh mục, người dùng và đơn hàng.
+**Xây dựng website bán thực phẩm hữu cơ Organic Shop**
 
----
+## Giới thiệu website/hệ thống
 
-## 👥 Thành viên nhóm
+Organic Shop là hệ thống website hỗ trợ kinh doanh thực phẩm hữu cơ, giúp khách hàng xem danh sách sản phẩm, tìm kiếm và lọc sản phẩm, quản lý giỏ hàng, đặt hàng, thanh toán và theo dõi đơn hàng. Hệ thống cũng có khu vực quản trị để admin quản lý sản phẩm, danh mục, người dùng, đơn hàng, tồn kho, bài viết/blog và theo dõi thông tin tổng quan.
+
+Backend cung cấp REST API bảo mật bằng JWT, tích hợp Swagger/OpenAPI để kiểm thử API, hỗ trợ đăng nhập Google, gửi email, thanh toán VNPay và chatbot AI. Frontend được xây dựng bằng React + Vite, giao tiếp với backend thông qua API.
+
+## Danh sách thành viên
 
 | STT | Họ và tên | MSSV | Vai trò |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 1 | Nguyễn Đức Minh | 23810310259 | Nhóm trưởng |
 | 2 | Ngô Đức Dũng | 23810310264 | Thành viên |
 | 3 | Vũ Minh Thành | 23810310236 | Thành viên |
 
----
+## Phân công nhiệm vụ cụ thể
 
-## 🚀 Công nghệ sử dụng
+| Thành viên | Nhiệm vụ |
+| --- | --- |
+| Nguyễn Đức Minh | Phụ trách backend, thiết kế database, xây dựng API xác thực, quản lý người dùng, phân quyền, tích hợp JWT, Swagger/OpenAPI và cấu hình hệ thống. |
+| Ngô Đức Dũng | Phụ trách chức năng khách hàng: sản phẩm, danh mục, tìm kiếm/lọc sản phẩm, giỏ hàng, đặt hàng, thanh toán và theo dõi đơn hàng. |
+| Vũ Minh Thành | Phụ trách frontend, giao diện người dùng, giao diện quản trị, tích hợp API, hiển thị dữ liệu sản phẩm, đơn hàng, đánh giá, blog và chatbot AI. |
+
+## Công nghệ sử dụng
 
 | Thành phần | Công nghệ |
-|---|---|
-| Frontend | Đang cập nhật |
-| Backend | Java 17, Spring Boot 3, Spring Security, Spring Data JPA |
-| Database | MySQL |
+| --- | --- |
+| Frontend | React 18, TypeScript, Vite, Tailwind CSS, React Router, TanStack Query, Axios, Lucide React |
+| Backend | Java 17, Spring Boot 3.2.4, Spring Web, Spring Security, Spring Data JPA, Validation |
+| Database | MySQL 8.x |
+| Cache | Redis |
 | API Docs | Swagger / OpenAPI |
-| Thanh toán | VNPay / MoMo (cấu hình mẫu) |
+| Authentication | JWT, Google OAuth2 |
+| Mapping | MapStruct |
+| Email | Spring Mail, Gmail SMTP |
+| Thanh toán | VNPay Sandbox |
+| AI | OpenAI API cấu hình qua biến môi trường |
+| Build tools | Maven, npm |
 
----
+## Chức năng chính
 
-## 📋 Tài liệu Đặc tả Yêu cầu Phần mềm (SRS)
+- Đăng ký, đăng nhập, xác thực bằng JWT và đăng nhập Google.
+- Xem danh sách sản phẩm, chi tiết sản phẩm, danh mục, tìm kiếm và lọc sản phẩm.
+- Quản lý giỏ hàng, đặt hàng, thanh toán VNPay và theo dõi trạng thái đơn hàng.
+- Quản lý hồ sơ người dùng, địa chỉ giao hàng, đánh giá và bình luận sản phẩm.
+- Quản trị sản phẩm, danh mục, người dùng, đơn hàng, tồn kho và bài viết/blog.
+- Tích hợp Swagger để kiểm thử API và chatbot AI hỗ trợ tư vấn sản phẩm.
 
-Các tài liệu SRS được lưu trong thư mục [`/srs/`](./srs/).
+## Hướng dẫn cài đặt
 
-| Mã | Chức năng | Tài liệu | Trạng thái |
-|---|---|---|---|
-| USER-01 | Giỏ hàng | [SRS_CART.md](./srs/SRS_CART.md) | ✅ 100% |
-| USER-02 | Thanh toán & Đặt hàng | [SRS_CHECKOUT.md](./srs/SRS_CHECKOUT.md) | ✅ 100% |
-| USER-03 | Tìm kiếm & Lọc sản phẩm | [SRS_SEARCH.md](./srs/SRS_SEARCH.md) | ✅ 100% |
-| USER-04 | Quản lý đơn hàng | [SRS_USER_ORDER.md](./srs/SRS_USER_ORDER.md) | ✅ 100% |
-| USER-05 | Đánh giá & Bình luận | [SRS_REVIEW.md](./srs/SRS_REVIEW.md) | 🔄 Đang cập nhật |
-| USER-06 | Quản lý hồ sơ người dùng | [SRS_USER_PROFILE.md](./srs/SRS_USER_PROFILE.md) | ✅ 100% |
-| ADMIN-01 | Quản lý sản phẩm | [SRS_ADMIN_PRODUCT.md](./srs/SRS_ADMIN_PRODUCT.md) | ✅ 100% |
-| ADMIN-02 | Quản lý đơn hàng | [SRS_ADMIN_ORDER.md](./srs/SRS_ADMIN_ORDER.md) | ✅ 100% |
-| ADMIN-03 | Quản lý người dùng & phân quyền | [SRS_ADMIN_USER.md](./srs/SRS_ADMIN_USER.md) | ✅ 100% |
-| ADMIN-04 | Quản lý tin tức / blog | [SRS_BLOG.md](./srs/SRS_BLOG.md) | ⏳ Chưa triển khai |
+### Yêu cầu môi trường
 
----
-
-## 🗂️ Cấu trúc thư mục dự án
-
-```text
-Organic-Shop/
-├── backend/
-│   ├── pom.xml
-│   └── src/
-│       └── main/
-│           ├── java/com/organicshop/backend/
-│           │   ├── config/           # Cấu hình bảo mật, OpenAPI, khởi tạo dữ liệu
-│           │   ├── controller/       # REST API controllers
-│           │   ├── dto/              # Data Transfer Objects
-│           │   ├── entity/           # JPA entities
-│           │   ├── repository/       # Spring Data JPA repositories
-│           │   ├── security/         # JWT, UserDetails, filter
-│           │   ├── service/          # Service interfaces
-│           │   └── service/impl/     # Service implementations
-│           └── resources/
-│               └── application.yaml  # Cấu hình hệ thống
-├── frontend/                         # Chưa cập nhật mã nguồn hoàn chỉnh
-├── reports/                          # Báo cáo tiến độ
-├── srs/                              # Tài liệu đặc tả chức năng
-├── DECUONG.md
-├── data.txt
-└── README.md
-```
-
----
-
-## 📈 Tiến độ dự án
-
-**Hoàn thành: 50%**
-
-### ✅ Hoàn thành
-- Xác thực người dùng: đăng ký, đăng nhập bằng JWT
-- Quản lý sản phẩm, danh mục, giỏ hàng, đơn hàng
-- Quản lý hồ sơ người dùng
-- Tích hợp Swagger để kiểm thử API
-- Khởi tạo tài khoản mặc định khi chạy backend
-
-### 🔄 Đang làm
-- Hoàn thiện đánh giá / bình luận sản phẩm
-- Hoàn thiện tích hợp thanh toán
-
-### ⏳ Chưa làm
-- Hoàn thiện frontend
-- Hoàn thiện module blog / tin tức
-
----
-
-## ⚙️ Hướng dẫn cài đặt & Chạy Code
-
-### **Yêu cầu**
 - Git
 - Java JDK 17
 - Maven 3.8+
+- Node.js 18+
+- npm
 - MySQL 8.x
+- Redis, nếu dùng chức năng cache
 
-### **Bước 1: Clone dự án**
+### Clone source code
+
 ```bash
-git clone <LINK_GIT_CUA_DU_AN>
+git clone https://github.com/thanhbn75/Organic-Shop
 cd Organic-Shop
 ```
 
-### **Bước 2: Tạo database**
+### Tạo database
+
 Tạo database MySQL tên `organic_shop`.
 
 ```sql
 CREATE DATABASE organic_shop CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-### **Bước 3: Kiểm tra cấu hình kết nối**
-Mở file `backend/src/main/resources/application.yaml` và kiểm tra:
+### Cấu hình backend
+
+Mở file `backend/src/main/resources/application.yaml` và kiểm tra các thông tin kết nối:
 
 ```yaml
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/organic_shop?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
-    password: Nguyen123456789-
+    password: root
 ```
 
-Nếu máy bạn dùng tài khoản MySQL khác thì sửa lại `username` và `password`.
+Nếu máy dùng tài khoản MySQL khác, hãy đổi `DB_USERNAME`, `DB_PASSWORD` hoặc sửa trực tiếp trong file cấu hình. Một số cấu hình có thể đặt bằng biến môi trường:
 
-### **Bước 4: Chạy backend**
+```bash
+DB_URL=jdbc:mysql://localhost:3306/organic_shop
+DB_USERNAME=root
+DB_PASSWORD=<MAT_KHAU_MYSQL>
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+OPENAI_API_KEY=<OPENAI_API_KEY_NEU_CO>
+CLIENT_ID=<GOOGLE_CLIENT_ID_NEU_CO>
+CLIENT_SECRET=<GOOGLE_CLIENT_SECRET_NEU_CO>
+```
+
+### Cài đặt frontend
+
+```bash
+cd frontend
+npm install
+```
+
+## Hướng dẫn chạy project
+
+### Chạy backend
+
 ```bash
 cd backend
 mvn spring-boot:run
@@ -139,37 +121,97 @@ mvn spring-boot:run
 
 Sau khi chạy thành công:
 
-- API: `http://localhost:8080`
-- Swagger: `http://localhost:8080/swagger-ui.html`
+- Backend API: `http://localhost:8080`
+- Swagger UI: `http://localhost:8080/swagger-ui.html`
+- OpenAPI JSON: `http://localhost:8080/v3/api-docs`
 
-### **Tài khoản mặc định**
-- Admin: `admin@organicshop.com` / `Admin@123`
-- User: `user@organicshop.com` / `User@123`
+### Chạy frontend
 
----
+Mở terminal khác:
 
-## 🔧 Thông tin backend
+```bash
+cd frontend
+npm run dev
+```
 
-### API chính
-- `POST /api/auth/login`
-- `POST /api/auth/register`
-- `GET /api/products`
-- `GET /api/categories`
-- `GET /api/users/me`
-- `POST /api/orders`
+Sau khi chạy thành công:
 
-### Khởi tạo dữ liệu mặc định
-File `backend/src/main/java/com/organicshop/backend/config/InitialApp.java` sẽ tự tạo tài khoản mặc định nếu chưa tồn tại trong database.
+- Frontend: `http://localhost:3000`
 
----
+### Build frontend
 
-## 📝 Ghi chú
+```bash
+cd frontend
+npm run build
+```
 
-- Backend dùng `Spring Boot + JPA + MySQL + JWT`
-- Hibernate đang cấu hình `ddl-auto: update`, vì vậy bảng sẽ được tự tạo/cập nhật theo entity
-- Thư mục `frontend` hiện chưa có cấu hình chạy hoàn chỉnh
-- Các cấu hình thanh toán hiện ở mức mẫu, cần điền thông tin thực tế nếu triển khai thật
+### Preview frontend sau khi build
 
----
+```bash
+cd frontend
+npm run preview
+```
 
-*Hà Nội, 09 tháng 04 năm 2026*
+## Tài khoản demo
+
+Hệ thống tự tạo tài khoản demo khi backend chạy lần đầu nếu database chưa có dữ liệu tương ứng.
+
+| Vai trò | Email | Mật khẩu |
+| --- | --- | --- |
+| Admin | `admin@organicshop.com` | `Admin@123` |
+| User | `user@organicshop.com` | `User@123` |
+
+## Hình ảnh minh họa hệ thống
+
+Thư mục lưu hình ảnh minh họa: [`docs/images`](./docs/images)
+
+Bạn có thể thêm ảnh màn hình vào thư mục trên và cập nhật lại các đường dẫn bên dưới:
+
+| Màn hình | Hình ảnh |
+| --- | --- |
+| Trang chủ | `docs/images/home.png` |
+| Danh sách sản phẩm | `docs/images/products.png` |
+| Chi tiết sản phẩm | `docs/images/product-detail.png` |
+| Giỏ hàng | `docs/images/cart.png` |
+| Thanh toán | `docs/images/checkout.png` |
+| Quản trị | `docs/images/admin-dashboard.png` |
+
+Ví dụ chèn ảnh:
+
+```markdown
+![Trang chủ](./docs/images/home.png)
+```
+
+## Link video demo
+
+Đang cập nhật.
+
+## Link online đã deploy
+
+https://test-organic-shop.pages.dev/
+
+## Cấu trúc thư mục dự án
+
+```text
+Organic-Shop/
+├── backend/                  # Source code Spring Boot backend
+├── frontend/                 # Source code React + Vite frontend
+├── docs/images/              # Ảnh minh họa hệ thống
+├── img-data/                 # Ảnh dữ liệu và ảnh màn hình hiện có
+├── reports/                  # Báo cáo tiến độ
+├── srs/                      # Tài liệu đặc tả yêu cầu phần mềm
+├── DECUONG.md
+└── README.md
+```
+
+## Tài liệu liên quan
+
+- Tài liệu SRS: [`srs`](./srs)
+- Báo cáo tiến độ: [`reports`](./reports)
+- Ảnh dữ liệu hiện có: [`img-data`](./img-data)
+
+## Ghi chú
+
+- Backend dùng `ddl-auto: update`, vì vậy các bảng sẽ được Hibernate tự tạo hoặc cập nhật theo entity.
+- Các cấu hình Google OAuth2, VNPay và OpenAI cần điền thông tin thật nếu triển khai đầy đủ.
+- Redis nên được bật nếu muốn sử dụng đầy đủ các chức năng cache.

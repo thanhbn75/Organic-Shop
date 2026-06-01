@@ -163,13 +163,10 @@ Hệ thống tự tạo tài khoản demo khi backend chạy lần đầu nếu 
 
 ## Hình ảnh minh họa hệ thống
 
-Thư mục lưu hình ảnh minh họa: [`docs/images`](./docs/images)
-
-Bạn có thể thêm ảnh màn hình vào thư mục trên và cập nhật lại các đường dẫn bên dưới:
-
 | Màn hình | Hình ảnh |
 | --- | --- |
-| Trang chủ | `docs/images/home.png` |
+| Trang chủ | <img width="1920" height="1020" alt="trangchu" src="https://github.com/user-attachments/assets/588f794a-3530-4f20-854e-d6dccb2269f0" />
+|
 | Danh sách sản phẩm | `docs/images/products.png` |
 | Chi tiết sản phẩm | `docs/images/product-detail.png` |
 | Giỏ hàng | `docs/images/cart.png` |

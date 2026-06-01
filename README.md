@@ -183,16 +183,9 @@ Hệ thống tự tạo tài khoản demo khi backend chạy lần đầu nếu 
 <img width="1920" height="1020" alt="quantri6" src="https://github.com/user-attachments/assets/38bc69dc-df94-4c48-9239-00ab6d083614" />
 |
 
-Ví dụ chèn ảnh:
-
-```markdown
-![Trang chủ](./docs/images/home.png)
-```
-
 ## Link video demo
 
-Đang cập nhật.
-
+https://drive.google.com/file/d/1hh7W_QrNx_keDJrwUnfUfVCOGTYTkFGC/view
 ## Link online đã deploy
 
 https://test-organic-shop.pages.dev/

@@ -167,11 +167,21 @@ Hệ thống tự tạo tài khoản demo khi backend chạy lần đầu nếu 
 | --- | --- |
 | Trang chủ | <img width="1920" height="1020" alt="trangchu" src="https://github.com/user-attachments/assets/588f794a-3530-4f20-854e-d6dccb2269f0" />
 |
-| Danh sách sản phẩm | `docs/images/products.png` |
-| Chi tiết sản phẩm | `docs/images/product-detail.png` |
-| Giỏ hàng | `docs/images/cart.png` |
-| Thanh toán | `docs/images/checkout.png` |
-| Quản trị | `docs/images/admin-dashboard.png` |
+| Danh sách sản phẩm |<img width="1920" height="1020" alt="sanpham" src="https://github.com/user-attachments/assets/f21829e8-0b36-4ac5-88e4-199cdce95acc" />
+|
+| Chi tiết sản phẩm |<img width="1920" height="1020" alt="ttsanpham" src="https://github.com/user-attachments/assets/3f26e049-3732-4d75-b784-a7736a975181" />
+|
+| Giỏ hàng |<img width="1920" height="1020" alt="giohang" src="https://github.com/user-attachments/assets/8347d664-ea0a-421f-a0b5-d3e8c92d9d09" />
+|
+| Thanh toán |<img width="1920" height="1020" alt="thanhtoan" src="https://github.com/user-attachments/assets/df476983-aaf9-494e-b4f5-28012aaa51e5" />
+|
+| Quản trị |<img width="1920" height="1020" alt="quantri1" src="https://github.com/user-attachments/assets/536b92e8-c968-4dd0-a92a-fd41e595204e" />
+<img width="1920" height="1020" alt="quantri2" src="https://github.com/user-attachments/assets/c307f22a-ebec-4864-83b1-d151b3a81df0" />
+<img width="1920" height="1020" alt="quantri3" src="https://github.com/user-attachments/assets/d6f6ea6d-8bae-4067-a2e6-3cf4a7c32807" />
+<img width="1920" height="1020" alt="quantri4" src="https://github.com/user-attachments/assets/d26165e7-e03d-4c6d-81f0-c4743b9063e3" />
+<img width="1920" height="1020" alt="quantri5" src="https://github.com/user-attachments/assets/5d67bde1-76ed-4daa-8e43-31dc86c7c5a8" />
+<img width="1920" height="1020" alt="quantri6" src="https://github.com/user-attachments/assets/38bc69dc-df94-4c48-9239-00ab6d083614" />
+|
 
 Ví dụ chèn ảnh:
 

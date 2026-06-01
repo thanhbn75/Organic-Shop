@@ -158,8 +158,8 @@ Hệ thống tự tạo tài khoản demo khi backend chạy lần đầu nếu 
 
 | Vai trò | Email | Mật khẩu |
 | --- | --- | --- |
-| Admin | `admin@organicshop.com` | `Admin@123` |
-| User | `user@organicshop.com` | `User@123` |
+| Admin | `test@organicshop.com` | `test123` |
+| User | `testuser@organicshop.com` | `test123` |
 
 ## Hình ảnh minh họa hệ thống
 
